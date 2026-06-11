@@ -1,0 +1,11 @@
+{
+  "name": "flamesphp/router",
+  "description": "Flames: Router",
+  "type": "library",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "license": "MIT",
+  "require": {
+    "php": "^8.3"
+  }
+}
