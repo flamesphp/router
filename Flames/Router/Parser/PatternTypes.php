@@ -7,7 +7,7 @@ namespace Flames\Router\Parser;
 final class PatternTypes
 {
     /** @var array<string, string> */
-    public const DEFAULT = [
+    public const array DEFAULT = [
         'i'  => '[0-9]++',
         'a'  => '[0-9A-Za-z]++',
         'h'  => '[0-9A-Fa-f]++',

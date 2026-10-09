@@ -6,7 +6,7 @@ namespace Flames\Router\Parser;
 
 final class PatternCompiler
 {
-    private const TOKEN_PATTERN = '`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`';
+    private const string TOKEN_PATTERN = '`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`';
 
     /** @param array<string, string> $matchTypes */
     public static function toRegex(string $route, array $matchTypes): string

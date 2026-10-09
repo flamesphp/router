@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Flames\Router;
 
-final class Matcher
+final readonly class Matcher
 {
-    public function __construct(private readonly Registry $registry)
+    public function __construct(private Registry $registry)
     {
     }
 
