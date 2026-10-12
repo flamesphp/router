@@ -45,19 +45,46 @@ final readonly class Matcher
 
     private function matchCli(): ?RouteMatch
     {
-        $command = ($_SERVER['argv'][1] ?? null);
+        $parts = [];
 
-        if ($command === null) {
+        foreach (array_slice($_SERVER['argv'], 1) as $arg) {
+            if (str_starts_with($arg, '-')) {
+                break;
+            }
+
+            $parts[] = $arg;
+        }
+
+        if ($parts === []) {
             return null;
         }
 
+        $command = strtolower(implode(' ', $parts));
+
         foreach ($this->registry->routes() as $entry) {
-            if ($entry->methods === 'CLI' && $entry->routeFormatted === $command) {
+            if ($entry->methods === 'CLI' && !$entry->isDynamic() && $entry->routeFormatted === $command) {
                 return self::result(null, $command, $entry, []);
             }
         }
 
-        return null;
+        $hit = $this->registry->parser()->match($command, 'CLI');
+
+        if ($hit === false) {
+            return null;
+        }
+
+        $entry = $this->registry->routes()[(int) $hit['name']];
+
+        if ($entry->methods !== 'CLI') {
+            return null;
+        }
+
+        return self::result(
+            null,
+            $command,
+            $entry,
+            ParameterExtractor::from($entry, $hit['params']),
+        );
     }
 
     private static function result(?string $url, ?string $command, RouteEntry $entry, array $params): RouteMatch

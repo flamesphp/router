@@ -35,7 +35,7 @@ final class Router
             return;
         }
 
-        $blueprint = Compiler::compile($route);
+        $blueprint = Compiler::compile($route, strtoupper($method));
         $index = count(self::registry()->routes());
 
         self::registry()->add(new RouteEntry(

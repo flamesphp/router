@@ -6,9 +6,11 @@ namespace Flames\Router;
 
 final class Compiler
 {
-    public static function compile(string $route): RouteBlueprint
+    public static function compile(string $route, string $method = 'GET'): RouteBlueprint
     {
-        $route = str_replace(' ', '', $route);
+        if ($method !== 'CLI') {
+            $route = str_replace(' ', '', $route);
+        }
 
         return str_contains($route, '{')
             ? self::dynamic($route)
